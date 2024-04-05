@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using HelloWorld.Models;
 using HelloWorld.Data;
+using Microsoft.Extensions.Configuration;
 
 
 namespace HelloWorld 
@@ -13,7 +14,13 @@ namespace HelloWorld
         // dapper
         // public static void Main(string[] args) 
         // {
-        //     DataContextDapper dapper = new DataContextDapper();
+        //     // include connection string from json 
+        //     IConfiguration config = new ConfigurationBuilder()
+        //         .AddJsonFile("appsettings.json")
+        //         .Build();
+
+            
+        //     DataContextDapper dapper = new DataContextDapper(config);
 
         //     string sql_query = "Select GETDATE();";
 
@@ -71,7 +78,12 @@ namespace HelloWorld
         // entityframework
         public static void Main(string[] args) 
         {
-            DataContextEF entityFramework = new DataContextEF();
+            // include connection string from json 
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            DataContextEF entityFramework = new DataContextEF(config);
 
             Computer myComputer = new Computer() 
             {
