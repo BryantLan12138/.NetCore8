@@ -5,7 +5,7 @@ namespace DotnetAPI.Controllers;
 [ApiController]
 [Route("[controller]")]
 
-public class UserController: ControllerBase 
+public class UserController : ControllerBase
 {
     DataContextDapper _dapper;
     // constructor 
@@ -21,11 +21,33 @@ public class UserController: ControllerBase
         return _dapper.LoadDataSingle<DateTime>("SELECT GETDATE()");
     }
 
-    [HttpGet("GetUsers/{user}")]
-    public string[] GetUsers(string user)
+    [HttpGet("GetUsers/")]
+    public IEnumerable<User> GetUsers()
     {
-        string[] users = new string[] {"leyi", "pig", "tutu", user};
+        string sql = @"
+        SELECT [UserId],
+            [FirstName],
+            [LastName],
+            [Email],
+            [Gender],
+            [Active] 
+        FROM TutorialAppSchema.Users
+        ";
+        return _dapper.LoadData<User>(sql);
+    }
 
-        return users; 
+    [HttpGet("GetSingleUser/{userId}")]
+    public User GetSingleUser(int userId)
+    {
+        string sql = @"
+        SELECT [UserId],
+            [FirstName],
+            [LastName],
+            [Email],
+            [Gender],
+            [Active] 
+        FROM TutorialAppSchema.Users
+            WHERE UserId = " + userId.ToString();
+        return _dapper.LoadDataSingle<User>(sql);
     }
 }
