@@ -11,17 +11,21 @@ namespace HelloWorld
 
             });
             firstTask.Start();
+            
+            Console.WriteLine("Before the Task was created");
 
-            Task secondTask = ConsoleAfterDelayAsync("Task 2", 150);
+            Task secondTask = ConsoleAfterDelayAsync("Task 2", 160);
 
-            ConsoleAfterDelay("Delay", 75);
+            ConsoleAfterDelay("Delay", 101);
 
             Task thirdTask = ConsoleAfterDelayAsync("Task 3", 50);
 
             await secondTask;
-            await firstTask;
+            // await secondTask;
+            // await firstTask;
             Console.WriteLine("After the Task was created");
-            await thirdTask;
+            // await thirdTask;
+
         }
 
         static void ConsoleAfterDelay(string text, int delayTime)
