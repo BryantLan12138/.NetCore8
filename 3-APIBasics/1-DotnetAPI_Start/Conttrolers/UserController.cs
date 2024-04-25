@@ -103,4 +103,20 @@ public class UserController : ControllerBase
 
         throw new Exception("Failed to update the select user");
     }
+
+    [HttpDelete("DeleteUser/{userId}")]
+    public IActionResult DeleteUser(int userId)
+    {
+        string sql = @"
+            DELETE FROM TutorialAppSchema.Users 
+                WHERE UserId = '" + userId.ToString() + @"'
+        ";
+        Console.WriteLine(sql);
+        if (_dapper.ExecuteSql(sql))
+        {
+            return Ok();
+        }
+
+        throw new Exception("Failed to delete the select user");
+    }
 }
